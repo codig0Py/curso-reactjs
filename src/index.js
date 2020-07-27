@@ -5,11 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import PruebaGrid from './grid/PruebaGrid';
+// import PruebaGrid from './grid/PruebaGrid';
 
 ReactDOM.render(
   <React.StrictMode>
-    <PruebaGrid />
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
