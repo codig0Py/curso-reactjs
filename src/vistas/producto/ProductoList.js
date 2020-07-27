@@ -6,7 +6,7 @@ export default class ProductoList extends Component {
         return (
             <div>
                <Row>
-                   <Col>Lista de Productos</Col>
+                   <Col>Productos</Col>
                </Row>
                <Row>
                    <Col>
