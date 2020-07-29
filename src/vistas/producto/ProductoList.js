@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
-export default class ProductoList extends Component {
+class ProductoList extends Component {
+    creaNuevoProducto = () => {
+        // console.log('Nuevo producto');
+        console.log('Props del componente ProductoList: ', this.props)
+        this.props.history.push('/productos/nuevo')
+
+
+        
+    }
+
     render() {
         return (
             <div>
@@ -38,7 +48,7 @@ export default class ProductoList extends Component {
                </Row>
                <Row>
                    <Col>
-                    <Button variant="primary">Agregar Producto</Button>
+                        <Button variant="primary" onClick={this.creaNuevoProducto} >Agregar Producto</Button>
                    </Col>
                </Row>
             </div>
@@ -49,3 +59,6 @@ export default class ProductoList extends Component {
         
     }
 }
+
+
+export default withRouter(ProductoList);

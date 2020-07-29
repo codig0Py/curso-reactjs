@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
 
-export default class ProductoForm extends Component {
+class ProductoForm extends Component {
     render() {
         return (
             <>
@@ -39,7 +40,7 @@ export default class ProductoForm extends Component {
                 <Row>
                     <Col md={6}>
                         <Button variant="primary">Guardar</Button>{' '}
-                        <Button variant="danger">Volver</Button>
+                        <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                 </Row>
                 
@@ -47,3 +48,5 @@ export default class ProductoForm extends Component {
         )
     }
 }
+
+export default withRouter(ProductoForm)
