@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 class ProductoList extends Component {
     creaNuevoProducto = () => {
-        // console.log('Nuevo producto');
+        console.log('Nuevo producto');
         console.log('Props del componente ProductoList: ', this.props)
         this.props.history.push('/productos/nuevo')
 
