@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Table } from 'react-bootstrap';
+import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { db } from '../../config/firestore';
+import firebase, { db } from '../../config/firestore';
 
 class ProductoV2 extends Component {
     state = {
+        producto: '',
+        precioCompra: 0,
+        precioVenta: 0,
         listaProductos: [],
         unsubscribe: null
     }
@@ -20,29 +23,52 @@ class ProductoV2 extends Component {
 
     obtenerProductos = () => {
         let listaTemporal = [];
-        let unsubscribe = db.collection('productos')
+        let unsubscribe = db.collection('productos').orderBy('creado')
         .onSnapshot((snap) => {
             // console.log(snap);
             listaTemporal = [];
             snap.forEach((documento) => {
-                console.log(documento.data())
+                // console.log(documento.id)
                 listaTemporal.push(documento.data());
             })
             this.setState({listaProductos: listaTemporal, unsubscribe});
+        }, (error) => {
+            alert('Error al recuperar productos');
         })
         
     }
 
     renderListaProductos = () => {
-        return this.state.listaProductos.map((documento) => {
+        return this.state.listaProductos.map((documento, index) => {
+            let orden = index + 1;
             return (
                 // key es un identificador unico
                 <tr key={documento.producto}> 
+                    <td>{orden}</td>
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
                 </tr>
             )
+        })
+    }
+    setInputs = (evento) => {
+        this.setState({[evento.target.name]: evento.target.value})
+    }
+    guardarProducto = () => {
+        let datosFinales = {
+            producto: this.state.producto,
+            precioCompra: this.state.precioCompra,
+            precioVenta: this.state.precioVenta,
+            creado: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        // console.log(this.state);
+        db.collection("productos").add(datosFinales)
+        .then(() => {
+            alert('Producto agregado con exito');
+        })
+        .catch((error) => {
+            console.log('ERROR: ', error)
         })
     }
     componentWillUnmount(){
@@ -53,17 +79,56 @@ class ProductoV2 extends Component {
         const filasGeneradasdeLaTabla =  this.renderListaProductos();
         return (
             <div>
-               <Row>
+               {/* <Row>
                    <Col>Productos</Col>
-               </Row>
+               </Row> */}
+               <Form>
+                    <Row>
+                        <Col md={4}>
+                            <Form.Group>
+                                <Form.Label>Producto</Form.Label>
+                                <Form.Control type="text" name="producto"  onChange={this.setInputs}/>
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group>
+                                <Form.Label>Precio compra</Form.Label>
+                                <Form.Control type="number" name="precioCompra"  onChange={this.setInputs}/>
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group>
+                                <Form.Label>Precio venta</Form.Label>
+                                <Form.Control type="number" name="precioVenta" onChange={this.setInputs}/>
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>
+                            
+                        </Col>
+                    </Row>
+               </Form>
+               <Row>
+                    <Col md={6}>
+                        <Button variant="primary" onClick={this.guardarProducto}>Agregar</Button>{' '}
+                    </Col>
+                </Row>
+                <br/>
                <Row>
                    <Col>
                         <Table striped bordered hover>
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nombre</th>
-                                            <th>Descripcion</th>
+                                            <th>Producto</th>
+                                            <th>Precio Compra</th>
+                                            <th>Precio Venta</th>
                                             {/* <th>Fecha de Carga</th> */}
                                         </tr>
                                     </thead>
@@ -71,12 +136,6 @@ class ProductoV2 extends Component {
                                     </tbody>
                         </Table>
                         </Col>
-               </Row>
-               <Row>
-                   <Col>
-                        <Button variant="primary" onClick={this.creaNuevoProducto} >Agregar Producto</Button> {' '}
-                        <Button variant="danger" onClick={()=> {console.log('ProductoList state: ', this.state)}} >Ver state</Button>
-                   </Col>
                </Row>
             </div>
 

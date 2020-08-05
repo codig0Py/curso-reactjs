@@ -10,7 +10,6 @@ class ProductoForm extends Component {
         producto: '',
         precioCompra: 0,
         precioVenta: 0,
-        calculox: 123
     }
 
     guardarProducto = () => {
