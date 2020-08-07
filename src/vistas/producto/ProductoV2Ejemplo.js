@@ -3,7 +3,7 @@ import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, { db } from '../../config/firestore';
 
-class ProductoV2 extends Component {
+class ProductoV2Ejemplo extends Component {
     state = {
         producto: '',
         precioCompra: 0,
@@ -147,4 +147,4 @@ class ProductoV2 extends Component {
 }
 
 
-export default withRouter(ProductoV2);
+export default withRouter(ProductoV2Ejemplo);
