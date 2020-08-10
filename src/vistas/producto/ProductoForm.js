@@ -12,21 +12,55 @@ class ProductoForm extends Component {
         precioVenta: 0,
     }
 
+    componentDidMount(){
+        // console.log(this.props.match.params.id);
+        if(this.props.match.params.id) {
+            this.recuperarDatosProducto(this.props.match.params.id)
+        }
+    }
+
+    recuperarDatosProducto = (productoId) => {
+        db.collection('productos').doc(`${productoId}`).get()
+        .then((snap)=> {
+            console.log('Datos del producto recuperado: ', snap.data())
+            this.setState({
+                producto: snap.data().producto,
+                precioCompra: snap.data().precioCompra,
+                precioVenta: snap.data().precioVenta
+            })
+        })
+    }
+
     guardarProducto = () => {
         let datosFinales = {
             producto: this.state.producto,
             precioCompra: this.state.precioCompra,
             precioVenta: this.state.precioVenta,
         }
-        console.log(this.state);
-        db.collection("productos").add(datosFinales)
-        .then(() => {
-            alert('Producto agregado con exito');
-        })
-        .catch((error) => {
-            console.log('ERROR: ', error)
-        })
+
+        if(this.props.match.params.id) {
+            db.collection("productos").doc(`${this.props.match.params.id}`).update(datosFinales)
+            .then(() => {
+                alert('Producto actualizado con exito');
+            })
+            .catch((error) => {
+                console.log('ERROR: ', error)
+            })
+
+        } else {
+            db.collection("productos").add(datosFinales)
+            .then(() => {
+                alert('Producto agregado con exito');
+            })
+            .catch((error) => {
+                console.log('ERROR: ', error)
+            })
+
+        }
+        
     }
+
+
 
     setInputs = (evento) => {
         this.setState({[evento.target.name]: evento.target.value})
@@ -42,7 +76,7 @@ class ProductoForm extends Component {
                         <Form>
                             <Form.Group>
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control type="text" name="producto"  onChange={this.setInputs}/>
+                                <Form.Control type="text" name="producto" value={this.state.producto} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -50,7 +84,7 @@ class ProductoForm extends Component {
 
                             <Form.Group>
                                 <Form.Label>Precio compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra"  onChange={this.setInputs}/>
+                                <Form.Control type="number" name="precioCompra" value={this.state.precioCompra} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -58,7 +92,7 @@ class ProductoForm extends Component {
 
                             <Form.Group>
                                 <Form.Label>Precio venta</Form.Label>
-                                <Form.Control type="number" name="precioVenta" onChange={this.setInputs}/>
+                                <Form.Control type="number" name="precioVenta" value={this.state.precioVenta} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}

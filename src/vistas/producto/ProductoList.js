@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { db } from '../../config/firestore';
 
@@ -22,10 +23,12 @@ class ProductoList extends Component {
         db.collection('productos').get()
         .then((snap) => {
             snap.forEach((documento) => {
+                // console.log(documento.id)
                 // console.log(documento.data())
-                listaTemporal.push(documento.data());
+                listaTemporal.push({id: documento.id, ...documento.data()});
             })
             this.setState({listaProductos: listaTemporal});
+            // console.log('Lista de productos recuperada: ', this.state)
             //NO HACER DE ESTA FORMA
             // this.setState({
             //     listaProductos:documento.data()
@@ -40,10 +43,11 @@ class ProductoList extends Component {
         return this.state.listaProductos.map((documento) => {
             return (
                 // key es un identificador unico
-                <tr key={documento.producto}> 
+                <tr key={documento.id}> 
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
+                    <td><Link to={`/productos/editar/${documento.id}`}>Editar</Link> | <a href='#'>Borrar</a></td>
                 </tr>
             )
         })
@@ -65,6 +69,7 @@ class ProductoList extends Component {
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
                                             {/* <th>Fecha de Carga</th> */}
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>{filasGeneradasdeLaTabla}
