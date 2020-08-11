@@ -22,7 +22,8 @@ class ProductoFormv2 extends Component {
         precioCompra: 0,
         precioVenta: 0,
         listaProductos: [],
-        desuscribirse:  null
+        desuscribirse:  null,
+        productoEditarId: null
     }
     componentDidMount() {
         this.obtenerProductos();
@@ -31,20 +32,36 @@ class ProductoFormv2 extends Component {
         this.setState({[evento.target.name]: evento.target.value})
     }
     guardarProducto = () => {
-        let datosFinales = {
-            producto: this.state.producto,
-            precioCompra: this.state.precioCompra,
-            precioVenta: this.state.precioVenta,
-            creado: firebase.firestore.FieldValue.serverTimestamp()
+        if(this.state.productoEditarId) {
+            db.collection("productos").doc(`${this.state.productoEditarId}`).update({
+                producto: this.state.producto,
+                precioCompra: this.state.precioCompra,
+                precioVenta: this.state.precioVenta,
+            })
+            .then(() => {
+                alert('Producto actualizado con exito');
+                this.setState({
+                    productoEditarId: null
+                })
+            })
+            .catch((error) => {
+                console.log('ERROR: ', error)
+            })
+        } else {
+            db.collection("productos").add({
+                producto: this.state.producto,
+                precioCompra: this.state.precioCompra,
+                precioVenta: this.state.precioVenta,
+                creado: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                alert('Producto agregado con exito');
+            })
+            .catch((error) => {
+                console.log('ERROR: ', error)
+            })
         }
-        // console.log(this.state);
-        db.collection("productos").add(datosFinales)
-        .then(() => {
-            alert('Producto agregado con exito');
-        })
-        .catch((error) => {
-            console.log('ERROR: ', error)
-        })
+        this.limpiarCampos();
     }
     obtenerProductos = () => {
         let listaTemporal = [];
@@ -54,7 +71,7 @@ class ProductoFormv2 extends Component {
              listaTemporal = [];
              snap.forEach((documento) => {
                  // console.log(documento.id)
-                 listaTemporal.push(documento.data());
+                 listaTemporal.push({id: documento.id, ...documento.data()});
              })
              this.setState({listaProductos: listaTemporal, desuscribirse: unsubscribe });
         }, (error) => {
@@ -77,8 +94,34 @@ class ProductoFormv2 extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
+                    <td><a href='#' onClick={() => this.cargarDatosForm(documento.id)}>Editar</a></td>
                 </tr>
             )
+        })
+    }
+    cargarDatosForm = (productoId) => {
+        db.collection('productos').doc(`${productoId}`).get()
+        .then((snap)=> {
+            // console.log('Datos del producto recuperado: ', snap.data())
+            this.setState({
+                producto: snap.data().producto,
+                precioCompra: snap.data().precioCompra,
+                precioVenta: snap.data().precioVenta,
+                productoEditarId: snap.id
+            })
+        })
+        .catch((error) => {
+            console.log('ERROR: ', error)
+        })
+
+    }
+
+    limpiarCampos = () => {
+        this.setState({
+            producto: '',
+            precioCompra: 0,
+            precioVenta: 0,
+            productoEditarId: null
         })
     }
     render() {
@@ -90,7 +133,7 @@ class ProductoFormv2 extends Component {
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control type="text" name="producto"  onChange={this.setInputs}/>
+                                <Form.Control type="text" name="producto" value={this.state.producto} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -99,7 +142,7 @@ class ProductoFormv2 extends Component {
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Precio compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra"  onChange={this.setInputs}/>
+                                <Form.Control type="number" name="precioCompra" value={this.state.precioCompra} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -108,7 +151,7 @@ class ProductoFormv2 extends Component {
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Precio venta</Form.Label>
-                                <Form.Control type="number" name="precioVenta" onChange={this.setInputs}/>
+                                <Form.Control type="number" name="precioVenta" value={this.state.precioVenta} onChange={this.setInputs}/>
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -119,7 +162,8 @@ class ProductoFormv2 extends Component {
                </Form>
                <Row>
                     <Col md={6}>
-                        <Button variant="primary" onClick={this.guardarProducto}>Agregar</Button>{' '}
+                        <Button variant="primary" onClick={this.guardarProducto}>Guardar</Button>{' '}
+                        <Button variant="warning" onClick={this.limpiarCampos}>Limpiar campos</Button>{' '}
                     </Col>
                 </Row>
                <br/>
@@ -134,6 +178,7 @@ class ProductoFormv2 extends Component {
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
+                                            <th>Acciones</th>
                                             {/* <th>Fecha de Carga</th> */}
                                         </tr>
                                     </thead>
