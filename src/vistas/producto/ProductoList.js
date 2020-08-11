@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
+import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { db } from '../../config/firestore';
@@ -39,6 +40,34 @@ class ProductoList extends Component {
         })
     }
 
+    borrarProducto = (productoId) => {
+        db.collection('productos').doc(`${productoId}`).delete()
+        .then(() => {
+            this.obtenerProductos()
+        })
+        .catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+
+    }
+
+    confirmarAccion = (productoId) => {
+        confirmAlert({
+          title: 'Accion borrar',
+          message: 'Esta seguro?.',
+          buttons: [
+            {
+              label: 'Si',
+              onClick: () => this.borrarProducto(productoId)
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
+
     renderListaProductos = () => {
         return this.state.listaProductos.map((documento) => {
             return (
@@ -47,7 +76,7 @@ class ProductoList extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
-                    <td><Link to={`/productos/editar/${documento.id}`}>Editar</Link> | <a href='#'>Borrar</a></td>
+                    <td><Link to={`/productos/editar/${documento.id}`}>Editar</Link> | <a href='#' onClick={() => this.confirmarAccion(documento.id)}>Borrar</a></td>
                 </tr>
             )
         })
