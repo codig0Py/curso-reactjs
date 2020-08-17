@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import firebase, { db } from '../../config/firestore';
+import moment from 'moment';
 
 // function unsubscribe() {
 //     return function(){
@@ -52,7 +53,8 @@ class ProductoFormv2 extends Component {
                 producto: this.state.producto,
                 precioCompra: this.state.precioCompra,
                 precioVenta: this.state.precioVenta,
-                creado: firebase.firestore.FieldValue.serverTimestamp()
+                // creado: firebase.firestore.FieldValue.serverTimestamp()
+                creado: moment().unix()
             })
             .then(() => {
                 alert('Producto agregado con exito');
@@ -94,6 +96,8 @@ class ProductoFormv2 extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
+                    <td>{moment.unix(documento.creado).format('DD/MM/YYYY')}</td>
+
                     <td><a href='#' onClick={() => this.cargarDatosForm(documento.id)}>Editar</a></td>
                 </tr>
             )
@@ -178,8 +182,9 @@ class ProductoFormv2 extends Component {
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
+                                            <th>Fecha de Carga</th>
                                             <th>Acciones</th>
-                                            {/* <th>Fecha de Carga</th> */}
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
