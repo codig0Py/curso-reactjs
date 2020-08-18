@@ -83,7 +83,10 @@ class ProductoFormv2 extends Component {
     }
 
     componentWillUnmount(){
-        this.state.desuscribirse();
+        if(this.state.desuscribirse) {
+            this.state.desuscribirse();
+        }
+        
     }
 
     renderListaProductos = () => {
