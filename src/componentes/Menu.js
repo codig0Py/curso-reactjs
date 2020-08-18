@@ -15,6 +15,7 @@ class Menu extends Component {
                             <LinkContainer  exact to="/"><Nav.Link >Home</Nav.Link></LinkContainer>
                             <LinkContainer to="/productos"><Nav.Link >Producto</Nav.Link></LinkContainer>
                             <LinkContainer to="/productosv2"><Nav.Link >Producto Version 2</Nav.Link></LinkContainer>
+                            <LinkContainer to="/movimientos"><Nav.Link >Movimientos</Nav.Link></LinkContainer>
                            {/* <Nav.Link ><Link to="/">Home</Link></Nav.Link>
                             <Nav.Link ><Link to="/productos">Productos</Link></Nav.Link> */}
                             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

@@ -69,10 +69,8 @@ class ProductoFormv2 extends Component {
         let listaTemporal = [];
         let unsubscribe = db.collection('productos').orderBy('creado')
         .onSnapshot((snap) => {
-             // console.log(snap);
              listaTemporal = [];
              snap.forEach((documento) => {
-                 // console.log(documento.id)
                  listaTemporal.push({id: documento.id, ...documento.data()});
              })
              this.setState({listaProductos: listaTemporal, desuscribirse: unsubscribe });

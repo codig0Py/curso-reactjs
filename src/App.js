@@ -6,6 +6,7 @@ import ProductoV2Ejemplo from './vistas/producto/ProductoV2Ejemplo';
 import ProductoFormv2 from './vistas/producto/ProductoFormv2';
 import Menu from './componentes/Menu';
 import Home from './vistas/Home';
+import MovimientoForm from './vistas/movimiento/MovimientoForm'
 
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 // import './App.css';
@@ -22,6 +23,8 @@ class App extends Component {
              <Route exact path="/productosv2" component={ProductoFormv2}/>
              <Route  path="/productos/editar/:id" component={ProductoForm} />
              <Route  path="/productos/nuevo" component={ProductoForm} />
+             <Route  path="/movimientos" component={MovimientoForm} />
+
           </Switch>
         </Container>
      </Router>
