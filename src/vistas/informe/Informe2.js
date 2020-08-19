@@ -39,20 +39,12 @@ class Informe2 extends React.Component {
         return(
             <Row>
             <Col md={12}>
-                <ExcelFile element={<button>Download Data</button>}>
-                    {/* <ExcelSheet data={dataSet1} name="Employees">
+                <ExcelFile element={<Button variant="primary">Guardar</Button>} >
+                    <ExcelSheet data={dataSet1} name="Employees">
                         <ExcelColumn label="Name" value="name"/>
                         <ExcelColumn label="Wallet Money" value="amount"/>
                         <ExcelColumn label="Gender" value="sex"/>
-                        <ExcelColumn label="Marital Status"
-                                    value={(col) => col.is_married ? "Married" : "Single"}/>
-                    </ExcelSheet> */}
-                        <ExcelSheet data={dataSet1} name="Employees">
-                        <ExcelColumn label="Name" value="name"/>
-                        <ExcelColumn label="Wallet Money" value="amount"/>
-                        <ExcelColumn label="Gender" value="sex"/>
-                        <ExcelColumn label="Marital Status"
-                                    value={(col) => col.is_married ? "Married" : "Single"}/>
+                        <ExcelColumn label="Marital Status" value={(col) => col.is_married ? "Married" : "Single"}/>
                     </ExcelSheet>
                     
                 </ExcelFile>
