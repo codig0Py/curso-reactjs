@@ -4,7 +4,7 @@ import {Row, Col, Jumbotron, Button} from 'react-bootstrap';
 class Home extends Component {
     render() {
         return (
-            <div>
+            
                 <Row>
                     <Col md={12}>
                         <Jumbotron>
@@ -19,7 +19,7 @@ class Home extends Component {
                         </Jumbotron>
                     </Col>
                 </Row>
-            </div>
+          
         )
     }
 }
