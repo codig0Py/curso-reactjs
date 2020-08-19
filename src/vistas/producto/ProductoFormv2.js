@@ -93,7 +93,7 @@ class ProductoFormv2 extends Component {
             let orden = index + 1;
             return (
                 // key es un identificador unico
-                <tr key={documento.producto}> 
+                <tr key={documento.id}> 
                     <td>{orden}</td>
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>

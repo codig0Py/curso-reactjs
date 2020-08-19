@@ -35,16 +35,20 @@ const dataSet1 = [
 
 
 class ProductoInforme extends React.Component {
+    verProps =()=> {
+        console.log('ProductoInforme props: ', this.props)
+    }
     render(){
         return(
             <Row>
             <Col md={12}>
-                <ExcelFile element={<Button variant="primary">Exportar a Excel</Button>} >
-                    <ExcelSheet data={this.props.productos} name="Employees">
-                        <ExcelColumn label="Name" value="name"/>
-                        <ExcelColumn label="Wallet Money" value="amount"/>
-                        <ExcelColumn label="Gender" value="sex"/>
-                        <ExcelColumn label="Marital Status" value={(col) => col.is_married ? "Married" : "Single"}/>
+                <ExcelFile element={<Button variant="primary" onClick={()=> this.verProps()}>Exportar a Excel</Button>} >
+                    <ExcelSheet data={this.props.productos} name="Productos">
+                        <ExcelColumn label="Producto" value="producto"/>
+                        <ExcelColumn label="Precio Compra" value="precioCompra"/>
+                        <ExcelColumn label="Precio Venta" value="precioVenta"/>
+                        {/* <ExcelColumn label="Creado" value="creado"/> */}
+                        
                     </ExcelSheet>
                 </ExcelFile>
             </Col>
