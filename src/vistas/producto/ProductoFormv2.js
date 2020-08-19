@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import firebase, { db } from '../../config/firestore';
 import moment from 'moment';
+import ProductoInforme from './ProductoInforme';
 
 // function unsubscribe() {
 //     return function(){
@@ -166,16 +167,26 @@ class ProductoFormv2 extends Component {
                     </Row>
                </Form>
                <Row>
-                    <Col md={6}>
+                    <Col md={3}>
                         <Button variant="primary" onClick={this.guardarProducto}>Guardar</Button>{' '}
                         <Button variant="warning" onClick={this.limpiarCampos}>Limpiar campos</Button>{' '}
+                    </Col>
+                    <Col md={{ span: 2, offset: 7 }}>
+                            <ProductoInforme productos={this.state.listaProductos}/>
                     </Col>
                 </Row>
                <br/>
                {/* FIN DEL FORMULARIO */}
                {/* INICIO DE LA TABLA DE PRODUCTOS */}
+               {/* <Row>
+                   <Col md={{ span: 2, offset: 10 }}>    
+                        <ProductoInforme productos={this.state.listaProductos}/>
+                   
+                   </Col>
+               </Row>
+               <br/> */}
                <Row>
-                   <Col>
+                   <Col md={12}>
                         <Table striped bordered hover>
                                     <thead>
                                         <tr>

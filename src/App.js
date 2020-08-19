@@ -21,8 +21,8 @@ class App extends Component {
         <Container>
           <Switch>
              <Route exact path="/" component={Home}/>
-             <Route  exact path="/infomes" component={Informe}/>
-             <Route  exact path="/infomes2" component={Informe2}/>
+             <Route  exact path="/informes" component={Informe}/>
+             <Route  exact path="/informes2" component={Informe2}/>
              <Route exact path="/productos" component={ProductoList}/>
              <Route exact path="/productosv2" component={ProductoFormv2}/>
              <Route  path="/productos/editar/:id" component={ProductoForm} />
