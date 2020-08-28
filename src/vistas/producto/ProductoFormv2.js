@@ -27,7 +27,8 @@ class ProductoFormv2 extends Component {
         desuscribirse:  null,
         productoEditarId: null,
         buscarPorNombre: '',
-        buscarPorPrecioCompra: ''
+        buscarPorPrecioCompra: '',
+        verFiltros: false
     }
     componentDidMount() {
         this.obtenerProductos();
@@ -173,11 +174,13 @@ class ProductoFormv2 extends Component {
                     </Row>
                </Form>
                <Row>
-                    <Col md={3}>
+                    <Col md={4}>
                         <Button variant="primary" onClick={this.guardarProducto}>Guardar</Button>{' '}
                         <Button variant="warning" onClick={this.limpiarCampos}>Limpiar campos</Button>{' '}
+                        <Button variant="info" onClick={() => this.setState({verFiltros: !this.state.verFiltros})}>Activar filtros</Button>{' '}
+                        
                     </Col>
-                    <Col md={{ span: 2, offset: 7 }}>
+                    <Col md={{ span: 2, offset: 6 }}>
                             <ProductoInforme productos={this.state.listaProductos}/>
                     </Col>
                 </Row>
@@ -197,8 +200,8 @@ class ProductoFormv2 extends Component {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Producto  <Form.Control type="text" name="buscarPorNombre" value={this.state.buscarPorNombre} onChange={this.setInputs}/></th>
-                                            <th>Precio Compra <Form.Control type="text" name="buscarPorPrecioCompra" value={this.state.buscarPorPrecioCompra} onChange={this.setInputs}/></th>
+                                            <th>Producto {this.state.verFiltros == true?<Form.Control type="text" name="buscarPorNombre" value={this.state.buscarPorNombre} onChange={this.setInputs}/>: null } </th>
+                                            <th>Precio Compra {this.state.verFiltros == true? <Form.Control type="text" name="buscarPorPrecioCompra" value={this.state.buscarPorPrecioCompra} onChange={this.setInputs}/>: null}</th>
                                             <th>Precio Venta</th>
                                             <th>Fecha de Carga</th>
                                             <th>Acciones</th>
