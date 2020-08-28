@@ -25,11 +25,14 @@ class ProductoFormv2 extends Component {
         precioVenta: 0,
         listaProductos: [],
         desuscribirse:  null,
-        productoEditarId: null
+        productoEditarId: null,
+        buscarPorNombre: '',
+        buscarPorPrecioCompra: ''
     }
     componentDidMount() {
         this.obtenerProductos();
     }
+   
     setInputs = (evento) => {
         this.setState({[evento.target.name]: evento.target.value})
     }
@@ -89,7 +92,10 @@ class ProductoFormv2 extends Component {
     }
 
     renderListaProductos = () => {
-        return this.state.listaProductos.map((documento, index) => {
+        return this.state.listaProductos.filter((documento) => {
+            return documento.producto.toLowerCase().indexOf(this.state.buscarPorNombre.toLowerCase()) >= 0 && (documento.precioCompra.toString().indexOf(this.state.buscarPorPrecioCompra) >= 0 )
+        })
+        .map((documento, index) => {
             let orden = index + 1;
             return (
                 // key es un identificador unico
@@ -191,8 +197,8 @@ class ProductoFormv2 extends Component {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Producto</th>
-                                            <th>Precio Compra</th>
+                                            <th>Producto  <Form.Control type="text" name="buscarPorNombre" value={this.state.buscarPorNombre} onChange={this.setInputs}/></th>
+                                            <th>Precio Compra <Form.Control type="text" name="buscarPorPrecioCompra" value={this.state.buscarPorPrecioCompra} onChange={this.setInputs}/></th>
                                             <th>Precio Venta</th>
                                             <th>Fecha de Carga</th>
                                             <th>Acciones</th>
