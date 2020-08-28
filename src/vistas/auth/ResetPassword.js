@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Form, Card } from 'react-bootstrap';
+import { auth } from '../../config/firestore';
 
 
-class Login extends React.Component {
+class ResetPassword extends React.Component {
     state = {
-        email : '',
-        password: ''
+        email : ''
     }
 
     componentDidMount() {
@@ -17,15 +17,27 @@ class Login extends React.Component {
     setInputs = (evento) => {
         this.setState({[evento.target.name]: evento.target.value})
     }
-    //ENvia la informacion al servicion de firebase
-    login = () => {
-        console.log('Datos del usuario: ', this.state)
-        this.props.autenticacion(this.state.email, this.state.password);
+
+    reset = () => {
+        // console.log('State: ', this.state.email)
+        //Aqui se resetea el password
+        auth.sendPasswordResetEmail(this.state.email)
+        .then(() => {
+            alert(`Correo enviado a : ${this.state.email}`);
+        }).catch((error) => {
+            alert(error);
+        });
     }
+    
 
     render() {
         return(
             <div style={{margin: "40px"}}>
+                <Row className="justify-content-md-center">
+                    <Col md={6}>
+                    <p>Introduzca su correo electrónico para recuperar su contraseña.</p>
+                    </Col>
+                </Row>
                 <Row className="justify-content-md-center">
                     <Col md={4}>
                         <Card>
@@ -36,15 +48,15 @@ class Login extends React.Component {
                                         <Form.Control type="email" placeholder="Introduzca su email" name="email" value={this.state.email} onChange={this.setInputs} />
                                     </Form.Group>
                                 </Form>
-                                <Form.Group controlId="formPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" name="password"  value={this.state.password } onChange={this.setInputs}/>
-                                </Form.Group>
-                                <Button style={{ backgroundColor:'#bf4458', borderColor:'#000', borderWidth:'5px', color:'#000'}} type="submit" onClick={this.login}>
-                                    Entrar
+                    
+                                <Button variant="primary" type="submit" onClick={this.reset}>
+                                    Reset
                                 </Button>
                                 {' '}
-                                <Link to={'/resetpassword'} >Reset password</Link>
+                                <Button variant="danger" type="submit" onClick={()=>{this.props.history.goBack()}}>
+                                    Volver
+                                </Button>
+                                
                             </Card.Body>
                         </Card>
 
@@ -56,4 +68,4 @@ class Login extends React.Component {
 }
 
 
-export default Login;
+export default ResetPassword;
