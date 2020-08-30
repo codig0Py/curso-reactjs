@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { db } from '../../config/firestore';
 
+import { VscEdit, VscTrash } from "react-icons/vsc";
+
 class ProductoList extends Component {
     state = {
         listaProductos: []
@@ -74,9 +76,13 @@ class ProductoList extends Component {
                 // key es un identificador unico
                 <tr key={documento.id}> 
                     <td>{documento.producto}</td>
-                    <td>{documento.precioCompra}</td>
-                    <td>{documento.precioVenta}</td>
-                    <td><Link to={`/productos/editar/${documento.id}`}>Editar</Link> | <a href='#' onClick={() => this.confirmarAccion(documento.id)}>Borrar</a></td>
+                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}>
+                        <Link to={`/productos/editar/${documento.id}`}><VscEdit/></Link>  {'  '}
+                        <VscTrash onClick={() => this.confirmarAccion(documento.id)}/>
+                    </td>
+                    {/* <td><Link to={`/productos/editar/${documento.id}`}>Editar</Link> | <a href='#' onClick={() => this.confirmarAccion(documento.id)}>Borrar</a></td> */}
                 </tr>
             )
         })
@@ -89,16 +95,24 @@ class ProductoList extends Component {
                <Row>
                    <Col>Productos</Col>
                </Row>
+               <br/>
+               <Row>
+                   <Col>
+                        <Button variant="primary" onClick={this.creaNuevoProducto} >Agregar Producto</Button> {' '}
+                        <Button variant="danger" onClick={()=> {console.log('ProductoList state: ', this.state)}} >Ver state</Button>
+                   </Col>
+               </Row>
+               <br/>
                <Row>
                    <Col>
                         <Table striped bordered hover>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            {/* <th>#</th> */}
                                             <th>Nombre</th>
-                                            <th>Descripcion</th>
-                                            {/* <th>Fecha de Carga</th> */}
-                                            <th>Acciones</th>
+                                            <th style={{textAlign:"center"}}>Precio Compra</th>
+                                            <th style={{textAlign:"center"}}>Precio Venta</th>
+                                            <th style={{textAlign:"center"}}>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>{filasGeneradasdeLaTabla}
@@ -106,12 +120,7 @@ class ProductoList extends Component {
                         </Table>
                         </Col>
                </Row>
-               <Row>
-                   <Col>
-                        <Button variant="primary" onClick={this.creaNuevoProducto} >Agregar Producto</Button> {' '}
-                        <Button variant="danger" onClick={()=> {console.log('ProductoList state: ', this.state)}} >Ver state</Button>
-                   </Col>
-               </Row>
+               
             </div>
 
         )

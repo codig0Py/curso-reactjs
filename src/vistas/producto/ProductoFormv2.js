@@ -4,6 +4,9 @@ import firebase, { db } from '../../config/firestore';
 import moment from 'moment';
 import ProductoInforme from './ProductoInforme';
 
+//Iconos 
+import { VscEdit } from "react-icons/vsc";
+
 // function unsubscribe() {
 //     return function(){
 //         x+y
@@ -106,8 +109,8 @@ class ProductoFormv2 extends Component {
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
                     <td>{moment.unix(documento.creado).format('DD/MM/YYYY')}</td>
-
-                    <td><a href='#' onClick={() => this.cargarDatosForm(documento.id)}>Editar</a></td>
+                    <td><VscEdit onClick={() => this.cargarDatosForm(documento.id)}/></td>
+                    {/* <td><a href='#' onClick={() => this.cargarDatosForm(documento.id)}>Editar</a></td> */}
                 </tr>
             )
         })
