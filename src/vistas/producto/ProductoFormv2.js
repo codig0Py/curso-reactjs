@@ -104,12 +104,12 @@ class ProductoFormv2 extends Component {
             return (
                 // key es un identificador unico
                 <tr key={documento.id}> 
-                    <td>{orden}</td>
+                    <td style={{textAlign:"center"}}>{orden}</td>
                     <td>{documento.producto}</td>
-                    <td>{documento.precioCompra}</td>
-                    <td>{documento.precioVenta}</td>
-                    <td>{moment.unix(documento.creado).format('DD/MM/YYYY')}</td>
-                    <td><VscEdit onClick={() => this.cargarDatosForm(documento.id)}/></td>
+                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}>{moment.unix(documento.creado).format('DD/MM/YYYY')}</td>
+                    <td style={{textAlign:"center"}}><VscEdit onClick={() => this.cargarDatosForm(documento.id)}/></td>
                     {/* <td><a href='#' onClick={() => this.cargarDatosForm(documento.id)}>Editar</a></td> */}
                 </tr>
             )
@@ -202,12 +202,12 @@ class ProductoFormv2 extends Component {
                         <Table striped bordered hover>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th style={{textAlign:"center"}}>#</th>
                                             <th>Producto {this.state.verFiltros == true?<Form.Control type="text" name="buscarPorNombre" value={this.state.buscarPorNombre} onChange={this.setInputs}/>: null } </th>
-                                            <th>Precio Compra {this.state.verFiltros == true? <Form.Control type="text" name="buscarPorPrecioCompra" value={this.state.buscarPorPrecioCompra} onChange={this.setInputs}/>: null}</th>
-                                            <th>Precio Venta</th>
-                                            <th>Fecha de Carga</th>
-                                            <th>Acciones</th>
+                                            <th style={{textAlign:"center"}}>Precio Compra {this.state.verFiltros == true? <Form.Control type="text" name="buscarPorPrecioCompra" value={this.state.buscarPorPrecioCompra} onChange={this.setInputs}/>: null}</th>
+                                            <th style={{textAlign:"center"}}>Precio Venta</th>
+                                            <th style={{textAlign:"center"}}>Fecha de Carga</th>
+                                            <th style={{textAlign:"center"}}>Acciones</th>
                                             
                                         </tr>
                                     </thead>
