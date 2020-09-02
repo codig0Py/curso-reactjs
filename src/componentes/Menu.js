@@ -16,6 +16,7 @@ class Menu extends Component {
                             <LinkContainer to="/productos"><Nav.Link >Producto</Nav.Link></LinkContainer>
                             <LinkContainer to="/productosv2"><Nav.Link >Producto Version 2</Nav.Link></LinkContainer>
                             <LinkContainer to="/movimientos"><Nav.Link >Movimientos</Nav.Link></LinkContainer>
+                            {/* <LinkContainer to="/signup"><Nav.Link >Registro de Usuarios</Nav.Link></LinkContainer> */}
                            {/* <Nav.Link ><Link to="/">Home</Link></Nav.Link>
                             <Nav.Link ><Link to="/productos">Productos</Link></Nav.Link> */}
                             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -26,10 +27,10 @@ class Menu extends Component {
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown> */}
                         </Nav>
+                        
                         <Navbar.Collapse className="justify-content-end">
                             <Navbar.Text>
-                            {/* Signed in as: <a href="#" >Mark Otto</a> */}
-                            <a href='#' onClick={this.props.salir}>Salir</a>
+                                Email Usuario:{`${this.props.usuario}`}<a href='#' onClick={this.props.salir}> | Salir</a>
                             </Navbar.Text>
                         </Navbar.Collapse>
                         {/* <Form inline>
