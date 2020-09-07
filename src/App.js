@@ -13,6 +13,7 @@ import Login from  './vistas/auth/Login';
 import UsuariosList from  './vistas/auth/UsuariosList';
 import PageNotFound from './vistas/error/PageNotFound';
 import ResetPassword from './vistas/auth/ResetPassword';
+import Roles from  './vistas/auth/Roles';
 import SignUp from './vistas/auth/SignUp';
 
 
@@ -91,6 +92,7 @@ render() {
              <PrivateRoute  path="/productos/nuevo" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/movimientos" component={MovimientoForm} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/usuarios" component={UsuariosList} usuarioLogeado={this.state.usuarioLogeado} />
+             <PrivateRoute  path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />
              <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} autenticacion={this.autenticacion}  />
              <PublicRoute  exact path="/resetpassword" component={ResetPassword} usuarioLogeado={this.state.usuarioLogeado}  />
              <PublicRoute  exact path="/signup" component={SignUp} usuarioLogeado={this.state.usuarioLogeado}  />

@@ -17,6 +17,7 @@ class Menu extends Component {
                             <LinkContainer to="/productosv2"><Nav.Link >Producto Version 2</Nav.Link></LinkContainer>
                             <LinkContainer to="/movimientos"><Nav.Link >Movimientos</Nav.Link></LinkContainer>
                             <LinkContainer to="/usuarios"><Nav.Link >Usuarios</Nav.Link></LinkContainer>
+                            <LinkContainer to="/roles"><Nav.Link >Roles</Nav.Link></LinkContainer>
                             {/* <LinkContainer to="/signup"><Nav.Link >Registro de Usuarios</Nav.Link></LinkContainer> */}
                            {/* <Nav.Link ><Link to="/">Home</Link></Nav.Link>
                             <Nav.Link ><Link to="/productos">Productos</Link></Nav.Link> */}
