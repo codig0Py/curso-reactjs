@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link , Redirect} from 'react-router-dom';
 import { Row, Col, Button, Form, Card } from 'react-bootstrap';
 
 
@@ -22,6 +22,10 @@ class Login extends React.Component {
         console.log('Datos del usuario: ', this.state)
         this.props.autenticacion(this.state.email, this.state.password);
     }
+    
+    signUp = () => {
+        this.props.history.push('/signup')
+    }
 
     render() {
         return(
@@ -40,10 +44,14 @@ class Login extends React.Component {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type="password" placeholder="Password" name="password"  value={this.state.password } onChange={this.setInputs}/>
                                 </Form.Group>
-                                <Button style={{ backgroundColor:'#bf4458', borderColor:'#000', borderWidth:'5px', color:'#000'}} type="submit" onClick={this.login}>
+                                <Button variant="primary" type="submit" onClick={this.login}>
                                     Entrar
                                 </Button>
                                 {' '}
+                                <Button variant="info" type="submit" onClick={this.signUp}>
+                                    Registrarse
+                                </Button>
+                                <br/>
                                 <Link to={'/resetpassword'} >Reset password</Link>
                             </Card.Body>
                         </Card>
