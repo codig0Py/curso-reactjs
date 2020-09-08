@@ -27,7 +27,8 @@ class App extends Component {
   state = {
     usuarioLogeado: false,
     usuario: '',
-    autorizado: false
+    autorizado: false,
+    usuarioRoles: []
   }
 
 componentDidMount(){
@@ -59,6 +60,8 @@ obtenerEstadoUsuario = (usuarioId) => {
     if(snap.data().estado != 1){
       // this.setState({ autorizado: true})
       auth.signOut();
+    } else {
+      this.setState({usuarioRoles: snap.data().roles})
     }
   })
   .catch((error) => {
@@ -81,7 +84,7 @@ salir =() => {
 render() {
    return(
      <Router>
-        {this.state.usuarioLogeado == true? <Menu salir={this.salir} usuario={this.state.usuario}/>: null}
+        {this.state.usuarioLogeado == true? <Menu salir={this.salir} usuario={this.state.usuario} roles={this.state.usuarioRoles}/>: null}
         <Container>
           <Switch>
              <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado} />
@@ -91,7 +94,7 @@ render() {
              <PrivateRoute exact path="/productosv2" component={ProductoFormv2} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/productos/editar/:id" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/productos/nuevo" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado} />
-             <PrivateRoute  path="/movimientos" component={MovimientoForm} usuarioLogeado={this.state.usuarioLogeado} />
+            {this.state.usuarioRoles.includes('Movimientos')? <PrivateRoute  path="/movimientos" component={MovimientoForm} usuarioLogeado={this.state.usuarioLogeado} />:null}
              <PrivateRoute  exact path="/usuarios" component={UsuariosList} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/usuarios/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />

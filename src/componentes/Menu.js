@@ -4,6 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 
 class Menu extends Component {
+    componentDidMount() {
+        console.log('Roles: ', this.props.roles)
+    }
     render() {
         return (
             <div>
@@ -15,7 +18,7 @@ class Menu extends Component {
                             <LinkContainer  exact to="/"><Nav.Link >Home</Nav.Link></LinkContainer>
                             <LinkContainer to="/productos"><Nav.Link >Producto</Nav.Link></LinkContainer>
                             <LinkContainer to="/productosv2"><Nav.Link >Producto Version 2</Nav.Link></LinkContainer>
-                            <LinkContainer to="/movimientos"><Nav.Link >Movimientos</Nav.Link></LinkContainer>
+                           {this.props.roles.includes('Movimientos')?  <LinkContainer to="/movimientos"><Nav.Link >Movimientos</Nav.Link></LinkContainer>: null}
                             <LinkContainer to="/usuarios"><Nav.Link >Usuarios</Nav.Link></LinkContainer>
                             <LinkContainer to="/roles"><Nav.Link >Roles</Nav.Link></LinkContainer>
                             {/* <LinkContainer to="/signup"><Nav.Link >Registro de Usuarios</Nav.Link></LinkContainer> */}
