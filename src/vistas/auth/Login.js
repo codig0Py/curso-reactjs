@@ -39,7 +39,6 @@ class Login extends React.Component {
                                         <Form.Label>Email</Form.Label>
                                         <Form.Control type="email" placeholder="Introduzca su email" name="email" value={this.state.email} onChange={this.setInputs} />
                                     </Form.Group>
-                                </Form>
                                 <Form.Group controlId="formPassword">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type="password" placeholder="Password" name="password"  value={this.state.password } onChange={this.setInputs}/>
@@ -53,6 +52,7 @@ class Login extends React.Component {
                                 </Button>
                                 <br/>
                                 <Link to={'/resetpassword'} >Reset password</Link>
+                                </Form>
                             </Card.Body>
                         </Card>
 

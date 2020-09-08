@@ -38,7 +38,7 @@ class UsuariosList extends Component {
                 <tr key={documento.id}> 
                     <td>{documento.email}</td>
                     <td style={{textAlign:"center"}}>
-                        <Link to={`/productos/editar/${documento.id}`}><VscEdit/></Link>
+                        <Link to={`/usuarios/roles/${documento.id}`}><VscEdit/></Link>
                     </td>
                 </tr>
             )
