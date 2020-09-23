@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { db } from '../../config/firestore';
+import moment from 'moment';
 
 
 
@@ -48,7 +49,7 @@ class ProductoForm extends Component {
             })
 
         } else {
-            db.collection("productos").add(datosFinales)
+            db.collection("productos").add({...datosFinales, creado: moment().unix()})
             .then(() => {
                 alert('Producto agregado con exito');
             })

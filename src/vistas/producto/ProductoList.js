@@ -23,7 +23,7 @@ class ProductoList extends Component {
 
     obtenerProductos = () => {
         let listaTemporal = [];
-        db.collection('productos').get()
+        db.collection('productos').orderBy('creado').get()
         .then((snap) => {
             snap.forEach((documento) => {
                 // console.log(documento.id)
