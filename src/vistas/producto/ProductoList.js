@@ -32,12 +32,16 @@ class ProductoList extends Component {
         .limit(3)
         .get()
         .then((snap) => {
-            snap.forEach((documento) => {
-                listaTemporal.push({id: documento.id, ...documento.data()});
-            })
-            console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
-            console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+            console.log('snap.docs[0]', snap.docs[0])
+            if(snap.docs[0]) {
+                snap.forEach((documento) => {
+                    listaTemporal.push({id: documento.id, ...documento.data()});
+                })
+                // console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+                // console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+                this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+            }
+           
             
         })
         .catch((error) => {
@@ -54,13 +58,17 @@ class ProductoList extends Component {
         .limitToLast(3)
         .get()
         .then((snap) => {
-            snap.forEach((documento) => {
+            console.log('snap.docs[0]', snap.docs[0])
+            if(snap.docs[0]) {
+                snap.forEach((documento) => {
                
-                listaTemporal.push({id: documento.id, ...documento.data()});
-            })
-            console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
-            console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+                    listaTemporal.push({id: documento.id, ...documento.data()});
+                })
+                // console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
+                // console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+                this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+            }
+            
             
         })
         .catch((error) => {
@@ -70,14 +78,15 @@ class ProductoList extends Component {
     obtenerProductos = () => {
         let listaTemporal = [];
         db.collection('productos').orderBy('creado').limit(3).get()
+        // db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3).get()
         .then((snap) => {
             snap.forEach((documento) => {
                 // console.log(documento.id)
                 // console.log(documento.data())
                 listaTemporal.push({id: documento.id, ...documento.data()});
             })
-            console.log('Primer registro mostrado: ', snap.docs[0].data())
-            console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+            // console.log('Primer registro mostrado: ', snap.docs[0].data())
+            // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
             this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
         })
         .catch((error) => {
