@@ -24,7 +24,7 @@ class ProductoList extends Component {
     }
 
     siguiente = () => {
-        console.log('Siguiente')
+        console.log('Siguiente', this.state.ultimoProductoVisible.data())
         let listaTemporal = [];
         db.collection('productos')
         .orderBy('creado')
@@ -35,6 +35,8 @@ class ProductoList extends Component {
             snap.forEach((documento) => {
                 listaTemporal.push({id: documento.id, ...documento.data()});
             })
+            console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+            console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
             this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
             
         })
@@ -44,7 +46,7 @@ class ProductoList extends Component {
     }
 
     anterior = () => {
-        console.log('Anterior')
+        console.log('Anterior', this.state.primerProductoVisible.data())
         let listaTemporal = [];
         db.collection('productos')
         .orderBy('creado')
@@ -56,6 +58,8 @@ class ProductoList extends Component {
                
                 listaTemporal.push({id: documento.id, ...documento.data()});
             })
+            console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
+            console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
             this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
             
         })
@@ -75,11 +79,6 @@ class ProductoList extends Component {
             console.log('Primer registro mostrado: ', snap.docs[0].data())
             console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
             this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
-            // console.log('Lista de productos recuperada: ', this.state)
-            //NO HACER DE ESTA FORMA
-            // this.setState({
-            //     listaProductos:documento.data()
-            // })
         })
         .catch((error) => {
             console.log(error)
@@ -167,7 +166,7 @@ class ProductoList extends Component {
                <Row>
                    <Col>
                         <Button variant="info" onClick={this.anterior}>Anterior</Button> {' '}
-                       {this.state.ultimoProductoVisible != ''?<Button variant="info" onClick={this.siguiente} >Siguiente</Button>: null} 
+                       {this.state.ultimoProductoVisible != undefined?<Button variant="info" onClick={this.siguiente} >Siguiente</Button>: null} 
                    </Col>
                </Row>
                
