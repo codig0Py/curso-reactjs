@@ -9,7 +9,9 @@ import { VscEdit, VscTrash } from "react-icons/vsc";
 
 class ProductoList extends Component {
     state = {
-        listaProductos: []
+        listaProductos: [],
+        primerProductoVisible: '',
+        ultimoProductoVisible: ''
     }
 
     componentDidMount() {
@@ -21,16 +23,58 @@ class ProductoList extends Component {
         this.props.history.push('/productos/nuevo')
     }
 
+    siguiente = () => {
+        console.log('Siguiente')
+        let listaTemporal = [];
+        db.collection('productos')
+        .orderBy('creado')
+        .startAfter(this.state.ultimoProductoVisible)
+        .limit(3)
+        .get()
+        .then((snap) => {
+            snap.forEach((documento) => {
+                listaTemporal.push({id: documento.id, ...documento.data()});
+            })
+            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+            
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    anterior = () => {
+        console.log('Anterior')
+        let listaTemporal = [];
+        db.collection('productos')
+        .orderBy('creado')
+        .endBefore(this.state.primerProductoVisible)
+        .limitToLast(3)
+        .get()
+        .then((snap) => {
+            snap.forEach((documento) => {
+               
+                listaTemporal.push({id: documento.id, ...documento.data()});
+            })
+            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+            
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
     obtenerProductos = () => {
         let listaTemporal = [];
-        db.collection('productos').orderBy('creado').get()
+        db.collection('productos').orderBy('creado').limit(3).get()
         .then((snap) => {
             snap.forEach((documento) => {
                 // console.log(documento.id)
                 // console.log(documento.data())
                 listaTemporal.push({id: documento.id, ...documento.data()});
             })
-            this.setState({listaProductos: listaTemporal});
+            console.log('Primer registro mostrado: ', snap.docs[0].data())
+            console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
             // console.log('Lista de productos recuperada: ', this.state)
             //NO HACER DE ESTA FORMA
             // this.setState({
@@ -118,7 +162,13 @@ class ProductoList extends Component {
                                     <tbody>{filasGeneradasdeLaTabla}
                                     </tbody>
                         </Table>
-                        </Col>
+                    </Col>
+               </Row>
+               <Row>
+                   <Col>
+                        <Button variant="info" onClick={this.anterior}>Anterior</Button> {' '}
+                       {this.state.ultimoProductoVisible != ''?<Button variant="info" onClick={this.siguiente} >Siguiente</Button>: null} 
+                   </Col>
                </Row>
                
             </div>
