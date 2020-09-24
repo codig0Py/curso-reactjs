@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Table } from 'react-bootstrap';
+import { Row, Col, Button, Table , Form} from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -11,11 +11,16 @@ class ProductoList extends Component {
     state = {
         listaProductos: [],
         primerProductoVisible: '',
-        ultimoProductoVisible: ''
+        ultimoProductoVisible: '',
+        buscador: ''
     }
 
     componentDidMount() {
         this.obtenerProductos();
+    }
+
+    setInputs = (evento) => {
+        this.setState({[evento.target.name]: evento.target.value})
     }
     creaNuevoProducto = () => {
         // console.log('Nuevo producto');
@@ -77,8 +82,27 @@ class ProductoList extends Component {
     }
     obtenerProductos = () => {
         let listaTemporal = [];
+        // let ref =  db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3);
         db.collection('productos').orderBy('creado').limit(3).get()
-        // db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3).get()
+        .then((snap) => {
+            snap.forEach((documento) => {
+                // console.log(documento.id)
+                // console.log(documento.data())
+                listaTemporal.push({id: documento.id, ...documento.data()});
+            })
+            // console.log('Primer registro mostrado: ', snap.docs[0].data())
+            // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    buscarProducto = () => {
+        let listaTemporal = [];
+        let ref =  db.collection('productos').where("producto", "==", `${this.state.buscador}`).orderBy('creado').limit(3);
+        ref.get()
         .then((snap) => {
             snap.forEach((documento) => {
                 // console.log(documento.id)
@@ -152,6 +176,18 @@ class ProductoList extends Component {
                    <Col>
                         <Button variant="primary" onClick={this.creaNuevoProducto} >Agregar Producto</Button> {' '}
                         <Button variant="danger" onClick={()=> {console.log('ProductoList state: ', this.state)}} >Ver state</Button>
+                   </Col>
+               </Row>
+               <br/>
+               <Row>
+                   <Col md={4}>
+                        <Form>
+                                <Form.Group>
+                                    <Form.Control type="text" name="buscador" value={this.state.buscador} onChange={this.setInputs} placeholder="Nombre del producto"/>
+                                </Form.Group>
+                        </Form>
+                        <Button variant="primary" onClick={this.buscarProducto} >Buscar</Button> {' '}
+                         
                    </Col>
                </Row>
                <br/>
