@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Table , Form} from 'react-bootstrap';
+import { Row, Col, Button, Table , Form, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -186,7 +186,16 @@ class ProductoList extends Component {
                                     <Form.Control type="text" name="buscador" value={this.state.buscador} onChange={this.setInputs} placeholder="Nombre del producto"/>
                                 </Form.Group>
                         </Form>
-                        <Button variant="primary" onClick={this.buscarProducto} >Buscar</Button> {' '}
+                        <OverlayTrigger
+                            placement="left"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={<Tooltip id="button-tooltip">Mensaje personalizado</Tooltip>}
+                        >   
+                        <div>
+                         <Button variant="primary" onClick={this.buscarProducto} >Buscar</Button>
+                        </div>
+                        </OverlayTrigger>
+                       
                          
                    </Col>
                </Row>
