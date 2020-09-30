@@ -184,7 +184,7 @@ class ProductoFormv2 extends Component {
                         
                     </Col>
                     <Col md={{ span: 2, offset: 6 }}>
-                            <ProductoInforme productos={this.state.listaProductos}/>
+                            <ProductoInforme name="Productos" labels={[{label:'Producto', value:'producto' }, {label:'Precio Compra', value:'precioCompra' }, {label:'Precio Venta', value:'precioVenta' }]} productos={this.state.listaProductos}/>
                     </Col>
                 </Row>
                <br/>

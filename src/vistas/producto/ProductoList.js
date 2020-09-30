@@ -187,7 +187,7 @@ class ProductoList extends Component {
                                 </Form.Group>
                         </Form>
                         <OverlayTrigger
-                            placement="left"
+                            placement="right"
                             delay={{ show: 250, hide: 400 }}
                             overlay={<Tooltip id="button-tooltip">Mensaje personalizado</Tooltip>}
                         >   
