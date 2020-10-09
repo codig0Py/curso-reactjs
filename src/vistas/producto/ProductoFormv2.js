@@ -3,6 +3,7 @@ import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import firebase, { db } from '../../config/firestore';
 import moment from 'moment';
 import ProductoInforme from './ProductoInforme';
+import NumberFormat from 'react-number-format';
 
 //Iconos 
 import { VscEdit } from "react-icons/vsc";
@@ -158,10 +159,12 @@ class ProductoFormv2 extends Component {
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Precio compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra" value={this.state.precioCompra} onChange={this.setInputs}/>
+                                {/* <Form.Control type="number" name="precioCompra" value={this.state.precioCompra} onChange={this.setInputs}/> */}
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
+                                <br/>
+                                <NumberFormat style={{borderColor: '#f3f3f3'}} thousandSeparator={true} suffix={' Guaranies'}/>      
                             </Form.Group>
                         </Col>
                         <Col md={4}>
