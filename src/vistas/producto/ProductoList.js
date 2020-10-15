@@ -12,7 +12,9 @@ class ProductoList extends Component {
         listaProductos: [],
         primerProductoVisible: '',
         ultimoProductoVisible: '',
-        buscador: ''
+        buscador: '',
+        totalPrecioCompra: 0,
+        totalPrecioVenta: 0
     }
 
     componentDidMount() {
@@ -31,6 +33,8 @@ class ProductoList extends Component {
     siguiente = () => {
         console.log('Siguiente', this.state.ultimoProductoVisible.data())
         let listaTemporal = [];
+        let totalPrecioCompraTemp = 0;
+        let totalPrecioVentaTemp = 0;
         db.collection('productos')
         .orderBy('creado')
         .startAfter(this.state.ultimoProductoVisible)
@@ -40,11 +44,19 @@ class ProductoList extends Component {
             console.log('snap.docs[0]', snap.docs[0])
             if(snap.docs[0]) {
                 snap.forEach((documento) => {
+                    totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+                    totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
                     listaTemporal.push({id: documento.id, ...documento.data()});
                 })
                 // console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
                 // console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-                this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+                this.setState({
+                    listaProductos: listaTemporal, 
+                    primerProductoVisible:snap.docs[0], 
+                    ultimoProductoVisible:snap.docs[snap.docs.length-1],
+                    totalPrecioCompra: totalPrecioCompraTemp,
+                    totalPrecioVenta: totalPrecioVentaTemp
+                });
             }
            
             
@@ -57,6 +69,8 @@ class ProductoList extends Component {
     anterior = () => {
         console.log('Anterior', this.state.primerProductoVisible.data())
         let listaTemporal = [];
+        let totalPrecioCompraTemp = 0;
+        let totalPrecioVentaTemp = 0;
         db.collection('productos')
         .orderBy('creado')
         .endBefore(this.state.primerProductoVisible)
@@ -66,12 +80,19 @@ class ProductoList extends Component {
             console.log('snap.docs[0]', snap.docs[0])
             if(snap.docs[0]) {
                 snap.forEach((documento) => {
-               
+                    totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+                    totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
                     listaTemporal.push({id: documento.id, ...documento.data()});
                 })
                 // console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
                 // console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-                this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1]});
+                this.setState({
+                    listaProductos: listaTemporal, 
+                    primerProductoVisible:snap.docs[0], 
+                    ultimoProductoVisible:snap.docs[snap.docs.length-1],
+                    totalPrecioCompra: totalPrecioCompraTemp,
+                    totalPrecioVenta: totalPrecioVentaTemp
+                });
             }
             
             
@@ -82,17 +103,28 @@ class ProductoList extends Component {
     }
     obtenerProductos = () => {
         let listaTemporal = [];
+        let totalPrecioCompraTemp = 0;
+        let totalPrecioVentaTemp = 0;
         // let ref =  db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3);
         db.collection('productos').orderBy('creado').limit(3).get()
         .then((snap) => {
             snap.forEach((documento) => {
-                // console.log(documento.id)
+                totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+                totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
+                // console.log(documento.data().precioCompra)
                 // console.log(documento.data())
                 listaTemporal.push({id: documento.id, ...documento.data()});
             })
             // console.log('Primer registro mostrado: ', snap.docs[0].data())
             // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
+            this.setState({
+                listaProductos: listaTemporal, 
+                primerProductoVisible:snap.docs[0], 
+                ultimoProductoVisible:snap.docs[snap.docs.length-1],
+                totalPrecioCompra: totalPrecioCompraTemp,
+                totalPrecioVenta: totalPrecioVentaTemp
+
+            });
         })
         .catch((error) => {
             console.log(error)
@@ -212,7 +244,13 @@ class ProductoList extends Component {
                                             <th style={{textAlign:"center"}}>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>{filasGeneradasdeLaTabla}
+                                    <tbody>
+                                        {filasGeneradasdeLaTabla}
+                                        <tr>
+                                            <td>TOTALES:</td>
+                                            <td style={{textAlign:"center"}}>{this.state.totalPrecioCompra}</td>
+                                            <td style={{textAlign:"center"}}>{this.state.totalPrecioVenta}</td>
+                                        </tr>
                                     </tbody>
                         </Table>
                     </Col>
