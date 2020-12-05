@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Form } from 'react-bootstrap';
-import firebase, { db } from '../../config/firestore';
+// import firebase, { db } from '../../config/firestore';
 import moment from 'moment';
 import ProductoInforme from './ProductoInforme';
 import NumberFormat from 'react-number-format';
@@ -42,50 +42,50 @@ class ProductoFormv2 extends Component {
         this.setState({[evento.target.name]: evento.target.value})
     }
     guardarProducto = () => {
-        if(this.state.productoEditarId) {
-            db.collection("productos").doc(`${this.state.productoEditarId}`).update({
-                producto: this.state.producto,
-                precioCompra: this.state.precioCompra,
-                precioVenta: this.state.precioVenta,
-            })
-            .then(() => {
-                alert('Producto actualizado con exito');
-                this.setState({
-                    productoEditarId: null
-                })
-            })
-            .catch((error) => {
-                console.log('ERROR: ', error)
-            })
-        } else {
-            db.collection("productos").add({
-                producto: this.state.producto,
-                precioCompra: this.state.precioCompra,
-                precioVenta: this.state.precioVenta,
-                // creado: firebase.firestore.FieldValue.serverTimestamp()
-                creado: moment().unix()
-            })
-            .then(() => {
-                alert('Producto agregado con exito');
-            })
-            .catch((error) => {
-                console.log('ERROR: ', error)
-            })
-        }
-        this.limpiarCampos();
+        // if(this.state.productoEditarId) {
+        //     db.collection("productos").doc(`${this.state.productoEditarId}`).update({
+        //         producto: this.state.producto,
+        //         precioCompra: this.state.precioCompra,
+        //         precioVenta: this.state.precioVenta,
+        //     })
+        //     .then(() => {
+        //         alert('Producto actualizado con exito');
+        //         this.setState({
+        //             productoEditarId: null
+        //         })
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR: ', error)
+        //     })
+        // } else {
+        //     db.collection("productos").add({
+        //         producto: this.state.producto,
+        //         precioCompra: this.state.precioCompra,
+        //         precioVenta: this.state.precioVenta,
+        //         // creado: firebase.firestore.FieldValue.serverTimestamp()
+        //         creado: moment().unix()
+        //     })
+        //     .then(() => {
+        //         alert('Producto agregado con exito');
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR: ', error)
+        //     })
+        // }
+        // this.limpiarCampos();
     }
     obtenerProductos = () => {
-        let listaTemporal = [];
-        let unsubscribe = db.collection('productos').orderBy('creado')
-        .onSnapshot((snap) => {
-             listaTemporal = [];
-             snap.forEach((documento) => {
-                 listaTemporal.push({id: documento.id, ...documento.data()});
-             })
-             this.setState({listaProductos: listaTemporal, desuscribirse: unsubscribe });
-        }, (error) => {
-            alert('Error al recuperar productos');
-        })
+        // let listaTemporal = [];
+        // let unsubscribe = db.collection('productos').orderBy('creado')
+        // .onSnapshot((snap) => {
+        //      listaTemporal = [];
+        //      snap.forEach((documento) => {
+        //          listaTemporal.push({id: documento.id, ...documento.data()});
+        //      })
+        //      this.setState({listaProductos: listaTemporal, desuscribirse: unsubscribe });
+        // }, (error) => {
+        //     alert('Error al recuperar productos');
+        // })
         
     }
 
@@ -117,19 +117,19 @@ class ProductoFormv2 extends Component {
         })
     }
     cargarDatosForm = (productoId) => {
-        db.collection('productos').doc(`${productoId}`).get()
-        .then((snap)=> {
-            // console.log('Datos del producto recuperado: ', snap.data())
-            this.setState({
-                producto: snap.data().producto,
-                precioCompra: snap.data().precioCompra,
-                precioVenta: snap.data().precioVenta,
-                productoEditarId: snap.id
-            })
-        })
-        .catch((error) => {
-            console.log('ERROR: ', error)
-        })
+        // db.collection('productos').doc(`${productoId}`).get()
+        // .then((snap)=> {
+        //     // console.log('Datos del producto recuperado: ', snap.data())
+        //     this.setState({
+        //         producto: snap.data().producto,
+        //         precioCompra: snap.data().precioCompra,
+        //         precioVenta: snap.data().precioVenta,
+        //         productoEditarId: snap.id
+        //     })
+        // })
+        // .catch((error) => {
+        //     console.log('ERROR: ', error)
+        // })
 
     }
 

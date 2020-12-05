@@ -3,7 +3,7 @@ import { Row, Col, Button, Table , Form, Tooltip, OverlayTrigger} from 'react-bo
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 
 import { VscEdit, VscTrash } from "react-icons/vsc";
 
@@ -32,38 +32,38 @@ class ProductoList extends Component {
 
     siguiente = () => {
         console.log('Siguiente', this.state.ultimoProductoVisible.data())
-        let listaTemporal = [];
-        let totalPrecioCompraTemp = 0;
-        let totalPrecioVentaTemp = 0;
-        db.collection('productos')
-        .orderBy('creado')
-        .startAfter(this.state.ultimoProductoVisible)
-        .limit(3)
-        .get()
-        .then((snap) => {
-            console.log('snap.docs[0]', snap.docs[0])
-            if(snap.docs[0]) {
-                snap.forEach((documento) => {
-                    totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
-                    totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
-                    listaTemporal.push({id: documento.id, ...documento.data()});
-                })
-                // console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
-                // console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-                this.setState({
-                    listaProductos: listaTemporal, 
-                    primerProductoVisible:snap.docs[0], 
-                    ultimoProductoVisible:snap.docs[snap.docs.length-1],
-                    totalPrecioCompra: totalPrecioCompraTemp,
-                    totalPrecioVenta: totalPrecioVentaTemp
-                });
-            }
+        // let listaTemporal = [];
+        // let totalPrecioCompraTemp = 0;
+        // let totalPrecioVentaTemp = 0;
+        // db.collection('productos')
+        // .orderBy('creado')
+        // .startAfter(this.state.ultimoProductoVisible)
+        // .limit(3)
+        // .get()
+        // .then((snap) => {
+        //     console.log('snap.docs[0]', snap.docs[0])
+        //     if(snap.docs[0]) {
+        //         snap.forEach((documento) => {
+        //             totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+        //             totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
+        //             listaTemporal.push({id: documento.id, ...documento.data()});
+        //         })
+        //         // console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+        //         // console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+        //         this.setState({
+        //             listaProductos: listaTemporal, 
+        //             primerProductoVisible:snap.docs[0], 
+        //             ultimoProductoVisible:snap.docs[snap.docs.length-1],
+        //             totalPrecioCompra: totalPrecioCompraTemp,
+        //             totalPrecioVenta: totalPrecioVentaTemp
+        //         });
+        //     }
            
             
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     anterior = () => {
@@ -71,93 +71,93 @@ class ProductoList extends Component {
         let listaTemporal = [];
         let totalPrecioCompraTemp = 0;
         let totalPrecioVentaTemp = 0;
-        db.collection('productos')
-        .orderBy('creado')
-        .endBefore(this.state.primerProductoVisible)
-        .limitToLast(3)
-        .get()
-        .then((snap) => {
-            console.log('snap.docs[0]', snap.docs[0])
-            if(snap.docs[0]) {
-                snap.forEach((documento) => {
-                    totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
-                    totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
-                    listaTemporal.push({id: documento.id, ...documento.data()});
-                })
-                // console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
-                // console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-                this.setState({
-                    listaProductos: listaTemporal, 
-                    primerProductoVisible:snap.docs[0], 
-                    ultimoProductoVisible:snap.docs[snap.docs.length-1],
-                    totalPrecioCompra: totalPrecioCompraTemp,
-                    totalPrecioVenta: totalPrecioVentaTemp
-                });
-            }
+        // db.collection('productos')
+        // .orderBy('creado')
+        // .endBefore(this.state.primerProductoVisible)
+        // .limitToLast(3)
+        // .get()
+        // .then((snap) => {
+        //     console.log('snap.docs[0]', snap.docs[0])
+        //     if(snap.docs[0]) {
+        //         snap.forEach((documento) => {
+        //             totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+        //             totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
+        //             listaTemporal.push({id: documento.id, ...documento.data()});
+        //         })
+        //         // console.log('Anterior - Primer registro mostrado: ', snap.docs[0].data())
+        //         // console.log('Anterior - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+        //         this.setState({
+        //             listaProductos: listaTemporal, 
+        //             primerProductoVisible:snap.docs[0], 
+        //             ultimoProductoVisible:snap.docs[snap.docs.length-1],
+        //             totalPrecioCompra: totalPrecioCompraTemp,
+        //             totalPrecioVenta: totalPrecioVentaTemp
+        //         });
+        //     }
             
             
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
     obtenerProductos = () => {
-        let listaTemporal = [];
-        let totalPrecioCompraTemp = 0;
-        let totalPrecioVentaTemp = 0;
-        // let ref =  db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3);
-        db.collection('productos').orderBy('creado').limit(3).get()
-        .then((snap) => {
-            snap.forEach((documento) => {
-                totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
-                totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
-                // console.log(documento.data().precioCompra)
-                // console.log(documento.data())
-                listaTemporal.push({id: documento.id, ...documento.data()});
-            })
-            // console.log('Primer registro mostrado: ', snap.docs[0].data())
-            // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-            this.setState({
-                listaProductos: listaTemporal, 
-                primerProductoVisible:snap.docs[0], 
-                ultimoProductoVisible:snap.docs[snap.docs.length-1],
-                totalPrecioCompra: totalPrecioCompraTemp,
-                totalPrecioVenta: totalPrecioVentaTemp
+        // let listaTemporal = [];
+        // let totalPrecioCompraTemp = 0;
+        // let totalPrecioVentaTemp = 0;
+        // // let ref =  db.collection('productos').where("producto", "==", "Producto 3").orderBy('creado').limit(3);
+        // db.collection('productos').orderBy('creado').limit(3).get()
+        // .then((snap) => {
+        //     snap.forEach((documento) => {
+        //         totalPrecioCompraTemp = totalPrecioCompraTemp + parseInt(documento.data().precioCompra);
+        //         totalPrecioVentaTemp = totalPrecioVentaTemp + parseInt(documento.data().precioVenta)
+        //         // console.log(documento.data().precioCompra)
+        //         // console.log(documento.data())
+        //         listaTemporal.push({id: documento.id, ...documento.data()});
+        //     })
+        //     // console.log('Primer registro mostrado: ', snap.docs[0].data())
+        //     // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+        //     this.setState({
+        //         listaProductos: listaTemporal, 
+        //         primerProductoVisible:snap.docs[0], 
+        //         ultimoProductoVisible:snap.docs[snap.docs.length-1],
+        //         totalPrecioCompra: totalPrecioCompraTemp,
+        //         totalPrecioVenta: totalPrecioVentaTemp
 
-            });
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        //     });
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     buscarProducto = () => {
-        let listaTemporal = [];
-        let ref =  db.collection('productos').where("producto", "==", `${this.state.buscador}`).orderBy('creado').limit(3);
-        ref.get()
-        .then((snap) => {
-            snap.forEach((documento) => {
-                // console.log(documento.id)
-                // console.log(documento.data())
-                listaTemporal.push({id: documento.id, ...documento.data()});
-            })
-            // console.log('Primer registro mostrado: ', snap.docs[0].data())
-            // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
-            this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // let listaTemporal = [];
+        // let ref =  db.collection('productos').where("producto", "==", `${this.state.buscador}`).orderBy('creado').limit(3);
+        // ref.get()
+        // .then((snap) => {
+        //     snap.forEach((documento) => {
+        //         // console.log(documento.id)
+        //         // console.log(documento.data())
+        //         listaTemporal.push({id: documento.id, ...documento.data()});
+        //     })
+        //     // console.log('Primer registro mostrado: ', snap.docs[0].data())
+        //     // console.log('Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+        //     this.setState({listaProductos: listaTemporal, primerProductoVisible:snap.docs[0], ultimoProductoVisible:snap.docs[snap.docs.length-1] });
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     borrarProducto = (productoId) => {
-        db.collection('productos').doc(`${productoId}`).delete()
-        .then(() => {
-            this.obtenerProductos()
-        })
-        .catch((error) => {
-            console.error("Error removing document: ", error);
-        });
+        // db.collection('productos').doc(`${productoId}`).delete()
+        // .then(() => {
+        //     this.obtenerProductos()
+        // })
+        // .catch((error) => {
+        //     console.error("Error removing document: ", error);
+        // });
 
     }
 

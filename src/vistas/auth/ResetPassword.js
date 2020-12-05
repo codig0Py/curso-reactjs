@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Form, Card } from 'react-bootstrap';
-import { auth } from '../../config/firestore';
+// import { auth } from '../../config/firestore';
 
 
 class ResetPassword extends React.Component {
@@ -21,12 +21,12 @@ class ResetPassword extends React.Component {
     reset = () => {
         // console.log('State: ', this.state.email)
         //Aqui se resetea el password
-        auth.sendPasswordResetEmail(this.state.email)
-        .then(() => {
-            alert(`Correo enviado a : ${this.state.email}`);
-        }).catch((error) => {
-            alert(error);
-        });
+        // auth.sendPasswordResetEmail(this.state.email)
+        // .then(() => {
+        //     alert(`Correo enviado a : ${this.state.email}`);
+        // }).catch((error) => {
+        //     alert(error);
+        // });
     }
     
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Form, Card } from 'react-bootstrap';
 
-import { auth, db } from '../../config/firestore';
+// import { auth, db } from '../../config/firestore';
 
 
 class SignUp extends React.Component {
@@ -22,27 +22,27 @@ class SignUp extends React.Component {
     }
     //ENvia la informacion al servicion de firebase
     signUp = () => {
-        let { email, password, repassword } = this.state;
-        // console.log('Datos del usuario: ', this.state)
-        if(password === repassword) {
-            auth.createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                const userId = auth.currentUser.uid;
-                console.log('ID del usuario actual: ', userId)
-                //Creamos el usuario en la base de datos
-                db.collection('usuarios').doc(userId).set({email: email, estado:0});
+        // let { email, password, repassword } = this.state;
+        // // console.log('Datos del usuario: ', this.state)
+        // if(password === repassword) {
+        //     auth.createUserWithEmailAndPassword(email, password)
+        //     .then(() => {
+        //         const userId = auth.currentUser.uid;
+        //         console.log('ID del usuario actual: ', userId)
+        //         //Creamos el usuario en la base de datos
+        //         db.collection('usuarios').doc(userId).set({email: email, estado:0});
 
-            })
-            .catch((error) => {
-                // Handle Errors here.
-                // var errorCode = error.code;
-                // var errorMessage = error.message;
-                console.log('Error message: ', error.message);
-                console.log('Error code ', error.code);
-            });
-        } else {
-            alert('Los password no coinciden');
-        }
+        //     })
+        //     .catch((error) => {
+        //         // Handle Errors here.
+        //         // var errorCode = error.code;
+        //         // var errorMessage = error.message;
+        //         console.log('Error message: ', error.message);
+        //         console.log('Error code ', error.code);
+        //     });
+        // } else {
+        //     alert('Los password no coinciden');
+        // }
     }
 
     render() {

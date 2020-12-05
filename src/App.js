@@ -17,61 +17,98 @@ import ResetPassword from './vistas/auth/ResetPassword';
 import Roles from  './vistas/auth/Roles';
 import SignUp from './vistas/auth/SignUp';
 
+//Firebase
+import firebase from 'firebase';
+// import 'firebase/firestore';
+// import 'firebase/auth';
 
-import { auth, db } from './config/firestore';
 
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-// import './App.css';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBbZ60mKk6ict5jZyDEmweKdTYMxMuSbh0",
+  authDomain: "curso-reactjs-e6cc0.firebaseapp.com",
+  databaseURL: "https://curso-reactjs-e6cc0.firebaseio.com",
+  projectId: "curso-reactjs-e6cc0",
+  storageBucket: "curso-reactjs-e6cc0.appspot.com",
+  messagingSenderId: "454053051418",
+  appId: "1:454053051418:web:116dc3b700868fc44d25a3"
+};
+const firebaseConfig2 = {
+  apiKey: "AIzaSyBbZ60mKk6ict5jZyDEmweKdTYMxMuSbh0",
+  authDomain: "curso-reactjs-e6cc0.firebaseapp.com",
+  databaseURL: "https://curso-reactjs-e6cc0.firebaseio.com",
+  projectId: "curso-reactjs-e6cc0",
+  storageBucket: "curso-reactjs-e6cc0.appspot.com",
+  messagingSenderId: "454053051418",
+  appId: "1:454053051418:web:116dc3b700868fc44d25a3"
+}
+
+let  db;
+let  auth;
+let firebaseApp;
+
 
 class App extends Component {
   state = {
     usuarioLogeado: false,
     usuario: '',
     autorizado: false,
-    usuarioRoles: []
+    usuarioRoles: [],
+    empresa:'1',
+    instanciar: true
   }
 
-componentDidMount(){
-  this.authListener();
-}
-authListener = () => {
-  auth.onAuthStateChanged((user) => {
-    if(user) {
-      // console.log('Login correcto: ', user.uid)
-       // User is signed in.
-        this.setState({usuarioLogeado: true, usuario: user.email })
-        this.obtenerEstadoUsuario(user.uid)
-
-    } else {
-      // console.log('Login incorrecto/logout: ', user)
-        // User is signed out.
-        this.setState({usuarioLogeado: false})
-    }
-
-  })
-}
 
 
-obtenerEstadoUsuario = (usuarioId) => {
-  console.log('Usuario a verificar: ', usuarioId)
-  db.collection('usuarios').doc(usuarioId).get()
-  .then((snap) => {
-    // console.log('Verifica estado usuario: ',snap.data().estado)
-    if(snap.data().estado != 1){
-      // this.setState({ autorizado: true})
-      auth.signOut();
-    } else {
-      this.setState({usuarioRoles: snap.data().roles})
-    }
-  })
-  .catch((error) => {
-    console.log('Error en verificaEstadoUsuario', error)
-  })
-}
 
-autenticacion = (email, password) => {
-  // console.log('metodo autenticacion')
+// obtenerEstadoUsuario = (usuarioId) => {
+//   console.log('Usuario a verificar: ', usuarioId)
+//   db.collection('usuarios').doc(usuarioId).get()
+//   .then((snap) => {
+//     // console.log('Verifica estado usuario: ',snap.data().estado)
+//     if(snap.data().estado != 1){
+//       // this.setState({ autorizado: true})
+//       auth.signOut();
+//     } else {
+//       this.setState({usuarioRoles: snap.data().roles})
+//     }
+//   })
+//   .catch((error) => {
+//     console.log('Error en verificaEstadoUsuario', error)
+//   })
+// }
+
+autenticacion = (email, password, empresa) => {
+ 
+  // if(firebaseApp) {
+  //   console.log('Borramos la instancia de firebase', firebaseApp)
+  //     firebaseApp.delete() 
+  // }
+  if(this.state.instanciar) {
+    if(empresa === '1') {
+      firebaseApp = firebase.initializeApp(firebaseConfig);
+      // console.log('FirebaseApp:', firebaseApp.delete(firebaseApp))
+      db = firebaseApp.firestore();
+      auth = firebaseApp.auth();
+      this.setState({instanciar: false})
+      
+    } else if(empresa === '2'){
+      firebaseApp = firebase.initializeApp(firebaseConfig2);
+      // console.log('FirebaseApp:', firebaseApp.delete(firebaseApp))
+      db = firebaseApp.firestore();
+      auth = firebaseApp.auth();
+      this.setState({instanciar: false})
+    } 
+  } 
+  
   auth.signInWithEmailAndPassword(email, password)
+  .then((res) => {
+    console.log('Datos del proyecto: ',firebaseApp )
+    this.setState({usuarioLogeado: true, usuario: res.user.email })
+    // this.obtenerEstadoUsuario(res.user.uid)
+  })
   .catch(error => {
     alert(error)
   })
@@ -79,6 +116,7 @@ autenticacion = (email, password) => {
 
 salir =() => {
   auth.signOut();
+  this.setState({usuarioLogeado: false, usuario: '' })
 }
 
 render() {
@@ -88,7 +126,7 @@ render() {
         <Container>
           <Switch>
              <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado} />
-             <PrivateRoute  exact path="/informes" component={Informe} usuarioLogeado={this.state.usuarioLogeado} />
+             {/* <PrivateRoute  exact path="/informes" component={Informe} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  exact path="/informes2" component={Informe2} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute exact path="/productos" component={ProductoList} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute exact path="/productosv2" component={ProductoFormv2} usuarioLogeado={this.state.usuarioLogeado} />
@@ -97,7 +135,7 @@ render() {
             {this.state.usuarioRoles.includes('Movimientos')? <PrivateRoute  path="/movimientos" component={MovimientoForm} usuarioLogeado={this.state.usuarioLogeado} />:null}
              <PrivateRoute  exact path="/usuarios" component={UsuariosList} usuarioLogeado={this.state.usuarioLogeado} />
              <PrivateRoute  path="/usuarios/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
-             <PrivateRoute  path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />
+             <PrivateRoute  path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} /> */}
              <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} autenticacion={this.autenticacion}  />
              <PublicRoute  exact path="/resetpassword" component={ResetPassword} usuarioLogeado={this.state.usuarioLogeado}  />
              <PublicRoute  exact path="/signup" component={SignUp} usuarioLogeado={this.state.usuarioLogeado}  />

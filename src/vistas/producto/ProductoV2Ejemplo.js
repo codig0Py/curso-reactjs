@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import firebase, { db } from '../../config/firestore';
+// import firebase, { db } from '../../config/firestore';
 
 class ProductoV2Ejemplo extends Component {
     state = {
@@ -22,19 +22,19 @@ class ProductoV2Ejemplo extends Component {
     }
 
     obtenerProductos = () => {
-        let listaTemporal = [];
-        let unsubscribe = db.collection('productos').orderBy('creado')
-        .onSnapshot((snap) => {
-            // console.log(snap);
-            listaTemporal = [];
-            snap.forEach((documento) => {
-                // console.log(documento.id)
-                listaTemporal.push(documento.data());
-            })
-            this.setState({listaProductos: listaTemporal, unsubscribe});
-        }, (error) => {
-            alert('Error al recuperar productos');
-        })
+        // let listaTemporal = [];
+        // let unsubscribe = db.collection('productos').orderBy('creado')
+        // .onSnapshot((snap) => {
+        //     // console.log(snap);
+        //     listaTemporal = [];
+        //     snap.forEach((documento) => {
+        //         // console.log(documento.id)
+        //         listaTemporal.push(documento.data());
+        //     })
+        //     this.setState({listaProductos: listaTemporal, unsubscribe});
+        // }, (error) => {
+        //     alert('Error al recuperar productos');
+        // })
         
     }
 
@@ -56,20 +56,20 @@ class ProductoV2Ejemplo extends Component {
         this.setState({[evento.target.name]: evento.target.value})
     }
     guardarProducto = () => {
-        let datosFinales = {
-            producto: this.state.producto,
-            precioCompra: this.state.precioCompra,
-            precioVenta: this.state.precioVenta,
-            creado: firebase.firestore.FieldValue.serverTimestamp()
-        }
+        // let datosFinales = {
+        //     producto: this.state.producto,
+        //     precioCompra: this.state.precioCompra,
+        //     precioVenta: this.state.precioVenta,
+        //     creado: firebase.firestore.FieldValue.serverTimestamp()
+        // }
         // console.log(this.state);
-        db.collection("productos").add(datosFinales)
-        .then(() => {
-            alert('Producto agregado con exito');
-        })
-        .catch((error) => {
-            console.log('ERROR: ', error)
-        })
+        // db.collection("productos").add(datosFinales)
+        // .then(() => {
+        //     alert('Producto agregado con exito');
+        // })
+        // .catch((error) => {
+        //     console.log('ERROR: ', error)
+        // })
     }
     componentWillUnmount(){
         this.state.unsubscribe();

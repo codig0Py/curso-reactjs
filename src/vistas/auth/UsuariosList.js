@@ -3,7 +3,7 @@ import { Row, Col, Button, Table } from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 
 import { VscEdit, VscTrash } from "react-icons/vsc";
 
@@ -17,17 +17,17 @@ class UsuariosList extends Component {
     }
    
     obtenerUsuarios = () => {
-        let listaTemporal = [];
-        db.collection('usuarios').get()
-        .then((snap) => {
-            snap.forEach((documento) => {
-                listaTemporal.push({id: documento.id, ...documento.data()});
-            })
-            this.setState({listaUsuarios: listaTemporal});
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        // let listaTemporal = [];
+        // db.collection('usuarios').get()
+        // .then((snap) => {
+        //     snap.forEach((documento) => {
+        //         listaTemporal.push({id: documento.id, ...documento.data()});
+        //     })
+        //     this.setState({listaUsuarios: listaTemporal});
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
 

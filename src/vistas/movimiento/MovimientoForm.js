@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import moment from 'moment';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 
 
 
@@ -18,11 +18,11 @@ class MovimientoForm extends Component {
     }
 
     guardar = () => {
-        console.log('States: ', moment(this.state.fecha).format('DD-MM-YYYY'));
-        db.collection('movimientos').add(this.state)
-        .catch(error => {
-            console.log('Error: ', error)
-        })
+        // console.log('States: ', moment(this.state.fecha).format('DD-MM-YYYY'));
+        // db.collection('movimientos').add(this.state)
+        // .catch(error => {
+        //     console.log('Error: ', error)
+        // })
     }
     render() {
         return (

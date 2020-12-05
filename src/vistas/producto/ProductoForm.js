@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 import moment from 'moment';
 
 
@@ -21,15 +21,15 @@ class ProductoForm extends Component {
     }
 
     recuperarDatosProducto = (productoId) => {
-        db.collection('productos').doc(`${productoId}`).get()
-        .then((snap)=> {
-            console.log('Datos del producto recuperado: ', snap.data())
-            this.setState({
-                producto: snap.data().producto,
-                precioCompra: snap.data().precioCompra,
-                precioVenta: snap.data().precioVenta
-            })
-        })
+        // db.collection('productos').doc(`${productoId}`).get()
+        // .then((snap)=> {
+        //     console.log('Datos del producto recuperado: ', snap.data())
+        //     this.setState({
+        //         producto: snap.data().producto,
+        //         precioCompra: snap.data().precioCompra,
+        //         precioVenta: snap.data().precioVenta
+        //     })
+        // })
     }
 
     guardarProducto = () => {
@@ -39,25 +39,25 @@ class ProductoForm extends Component {
             precioVenta: this.state.precioVenta,
         }
 
-        if(this.props.match.params.id) {
-            db.collection("productos").doc(`${this.props.match.params.id}`).update(datosFinales)
-            .then(() => {
-                alert('Producto actualizado con exito');
-            })
-            .catch((error) => {
-                console.log('ERROR: ', error)
-            })
+        // if(this.props.match.params.id) {
+        //     db.collection("productos").doc(`${this.props.match.params.id}`).update(datosFinales)
+        //     .then(() => {
+        //         alert('Producto actualizado con exito');
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR: ', error)
+        //     })
 
-        } else {
-            db.collection("productos").add({...datosFinales, creado: moment().unix()})
-            .then(() => {
-                alert('Producto agregado con exito');
-            })
-            .catch((error) => {
-                console.log('ERROR: ', error)
-            })
+        // } else {
+        //     db.collection("productos").add({...datosFinales, creado: moment().unix()})
+        //     .then(() => {
+        //         alert('Producto agregado con exito');
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR: ', error)
+        //     })
 
-        }
+        // }
         
     }
 

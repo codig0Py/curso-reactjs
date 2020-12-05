@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Form, Card } from 'react-bootstrap';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 
 
 export default class UsuarioRoles extends Component {
@@ -52,39 +52,39 @@ export default class UsuarioRoles extends Component {
     }
 
     guardarRoles = () => {
-        console.log('Id del usuario: ', this.props.match.params.usuarioId);
-        console.log('Roles seleccionados: ', this.state.usuarioRoles)
-        db.collection('usuarios').doc(this.props.match.params.usuarioId).update({roles: this.state.usuarioRoles})
-        .then(() => {
-            alert('Roles actualizados')
-        })
-        .catch(error => {
-            alert('Error al actualizar roles ', error)
-        })
+        // console.log('Id del usuario: ', this.props.match.params.usuarioId);
+        // console.log('Roles seleccionados: ', this.state.usuarioRoles)
+        // db.collection('usuarios').doc(this.props.match.params.usuarioId).update({roles: this.state.usuarioRoles})
+        // .then(() => {
+        //     alert('Roles actualizados')
+        // })
+        // .catch(error => {
+        //     alert('Error al actualizar roles ', error)
+        // })
     }
     obtenerRoles = () => {
-        let listaTemporal = [];
-        db.collection('roles').get()
-        .then((snap) => {
-            snap.forEach((documento) => {
-                listaTemporal.push({id:documento.id, ...documento.data()})
-            })
-            this.setState({listaRoles: listaTemporal});
-        })
-        .catch(error => {
-            console.log('Error: ', error)
-        })
+        // let listaTemporal = [];
+        // db.collection('roles').get()
+        // .then((snap) => {
+        //     snap.forEach((documento) => {
+        //         listaTemporal.push({id:documento.id, ...documento.data()})
+        //     })
+        //     this.setState({listaRoles: listaTemporal});
+        // })
+        // .catch(error => {
+        //     console.log('Error: ', error)
+        // })
     }
 
     obtenerRolesUsuario = () => {
-        db.collection('usuarios').doc(this.props.match.params.usuarioId).get()
-        .then((usuario) => {
-            // console.log('ROles del usuario: ', usuario.data().roles)
-            this.setState({usuarioRoles: usuario.data().roles});
-        })
-        .catch(error => {
-            console.log('Error: ', error)
-        })
+        // db.collection('usuarios').doc(this.props.match.params.usuarioId).get()
+        // .then((usuario) => {
+        //     // console.log('ROles del usuario: ', usuario.data().roles)
+        //     this.setState({usuarioRoles: usuario.data().roles});
+        // })
+        // .catch(error => {
+        //     console.log('Error: ', error)
+        // })
 
     }
 

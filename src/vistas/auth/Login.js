@@ -6,7 +6,8 @@ import { Row, Col, Button, Form, Card } from 'react-bootstrap';
 class Login extends React.Component {
     state = {
         email : '',
-        password: ''
+        password: '',
+        empresa: ''
     }
 
     componentDidMount() {
@@ -20,7 +21,7 @@ class Login extends React.Component {
     //ENvia la informacion al servicion de firebase
     login = () => {
         console.log('Datos del usuario: ', this.state)
-        this.props.autenticacion(this.state.email, this.state.password);
+        this.props.autenticacion(this.state.email, this.state.password, this.state.empresa);
     }
     
     signUp = () => {
@@ -42,6 +43,10 @@ class Login extends React.Component {
                                 <Form.Group controlId="formPassword">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type="password" placeholder="Password" name="password"  value={this.state.password } onChange={this.setInputs}/>
+                                </Form.Group>
+                                <Form.Group controlId="formEmpresa">
+                                    <Form.Label>Empresa</Form.Label>
+                                    <Form.Control type="text" placeholder="Empresa" name="empresa"  value={this.state.empresa } onChange={this.setInputs}/>
                                 </Form.Group>
                                 <Button variant="primary"  onClick={this.login}>
                                     Entrar

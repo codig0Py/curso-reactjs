@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Form } from 'react-bootstrap';
-import { db } from '../../config/firestore';
+// import { db } from '../../config/firestore';
 import moment from 'moment';
 
 //Iconos 
@@ -20,30 +20,30 @@ class Roles extends Component {
         this.setState({[evento.target.name]: evento.target.value})
     }
     guardarRol = () => {
-        db.collection("roles").add({
-            nombre: this.state.nombre,
-            creado: moment().unix()
-        })
-        .then(() => {
-            alert('Rol agregado con exito');
-        })
-        .catch((error) => {
-            console.log('ERROR: ', error)
-        })
-        this.limpiarCampos();
+        // db.collection("roles").add({
+        //     nombre: this.state.nombre,
+        //     creado: moment().unix()
+        // })
+        // .then(() => {
+        //     alert('Rol agregado con exito');
+        // })
+        // .catch((error) => {
+        //     console.log('ERROR: ', error)
+        // })
+        // this.limpiarCampos();
     }
     obtenerRoles = () => {
-        let listaTemporal = [];
-        let unsubscribe = db.collection('roles').orderBy('nombre')
-        .onSnapshot((snap) => {
-             listaTemporal = [];
-             snap.forEach((documento) => {
-                 listaTemporal.push({id: documento.id, ...documento.data()});
-             })
-             this.setState({listaRoles: listaTemporal, desuscribirse: unsubscribe });
-        }, (error) => {
-            alert('Error al recuperar roles');
-        })
+        // let listaTemporal = [];
+        // let unsubscribe = db.collection('roles').orderBy('nombre')
+        // .onSnapshot((snap) => {
+        //      listaTemporal = [];
+        //      snap.forEach((documento) => {
+        //          listaTemporal.push({id: documento.id, ...documento.data()});
+        //      })
+        //      this.setState({listaRoles: listaTemporal, desuscribirse: unsubscribe });
+        // }, (error) => {
+        //     alert('Error al recuperar roles');
+        // })
         
     }
 
