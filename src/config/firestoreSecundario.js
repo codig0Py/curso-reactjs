@@ -3,13 +3,14 @@ import 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const aplicacionSecundariaConfig = {
-    apiKey: "AIzaSyBbZ60mKk6ict5jZyDEmweKdTYMxMuSbh0",
-    authDomain: "curso-reactjs-e6cc0.firebaseapp.com",
-    databaseURL: "https://curso-reactjs-e6cc0.firebaseio.com",
-    projectId: "curso-reactjs-e6cc0",
-    storageBucket: "curso-reactjs-e6cc0.appspot.com",
-    messagingSenderId: "454053051418",
-    appId: "1:454053051418:web:116dc3b700868fc44d25a3"
+    apiKey: "AIzaSyCMyWinhuy2lAl_-CYBTCgb4-ZUuQ9fXgE",
+    authDomain: "loli-store-dev.firebaseapp.com",
+    databaseURL: "https://loli-store-dev.firebaseio.com",
+    projectId: "loli-store-dev",
+    storageBucket: "loli-store-dev.appspot.com",
+    messagingSenderId: "377589547179",
+    appId: "1:377589547179:web:0ee575d981f92f5cbab7ee",
+    measurementId: "G-T548EN5T0S"
 };
 
 // Initialize Firebase
